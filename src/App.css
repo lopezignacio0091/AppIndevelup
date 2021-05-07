@@ -1,0 +1,32 @@
+.MuiFormControl-root {
+  margin-bottom: 2% !important;
+  margin-top: 2% !important;
+  width: 90%;
+}
+
+.MuiFormGroup-root {
+  margin-bottom: 2% !important;
+  margin-top: 2% !important;
+}
+
+.botonesForm{
+  text-align: center;
+}
+
+.MuiButton-root{
+  margin-left: 2% !important;
+  margin-right: 2% !important;
+}
+
+form{
+  background-color: aliceblue;
+    padding: 2%;
+    border: 1px solid lightgrey;
+    border-radius: 2%;
+}
+
+form img{
+  width: 100%;
+  height: 18rem !important;
+  border-radius: 2%;
+}
