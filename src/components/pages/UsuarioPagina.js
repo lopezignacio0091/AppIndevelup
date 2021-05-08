@@ -1,12 +1,27 @@
 import { Grid } from '@material-ui/core';
 import React from 'react';
+import {  useEffect } from 'react';
+import { getUsers,setLoading} from '../../actions/UsuarioActions';
 import UserTable from '../layout/usuarios/userTable/UserTable';
 import NewButton from '../layout/usuarios/userTable/nuevoUserButton/NewButton';
 import UserFormDialog from '../layout/usuarios/dialog/userFormDialog';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import Progress from '../layout/progress/Progress'
 
 const UsuarioPagina = () => {
-  const {abrirFormularioStatus} = useSelector(state => state.UsuarioReducer);
+  const {abrirFormularioStatus,loading} = useSelector(state => state.UsuarioReducer); 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setLoading());
+    dispatch(getUsers());
+}, []);
+
+if(loading){
+    return(
+      <Progress/>
+    )
+  }
 
     return (
         

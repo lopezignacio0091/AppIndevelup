@@ -53,7 +53,8 @@ const TaskReducer =  (state = initialState, action) => {
         case GET_TASKS:
             return {
                 ...state,
-                tasks: action.payload
+                tasks: action.payload,
+                loading:false
             }
         case SET_LOADING:
             return {

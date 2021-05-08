@@ -31,15 +31,13 @@ const FormularioUsuario = () => {
 
     const SignupSchema = Yup.object().shape({
         name: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').matches(/^[a-zA-Z ]+$/, "Invalid Name only letters").required('Required'),
-        apellido: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').matches(/^[a-zA-Z ]+$/, "Invalid SurName only letters").required('Required'),
     });
 
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Formik
                 initialValues={{
-                    name: (userEdit.name !== '') ? userEdit.name : '',
-                    apellido: (userEdit.apellido !== '') ? userEdit.apellido : '',
+                    name: (userEdit.nombre !== '') ? userEdit.nombre : '',
                 }}
                 validationSchema={SignupSchema}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -62,16 +60,6 @@ const FormularioUsuario = () => {
                             <Grid item xs={12} md={12} lg={12}>
 
                                 <MyTextField className={classes.grid} name="name" type="text" label="Nombre" placeholder="Nombre" InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <AccountCircle />
-                                        </InputAdornment>
-                                    ),
-                                }} />
-
-                            </Grid>
-                            <Grid item xs={12} md={12} lg={12}>
-                                <MyTextField className={classes.grid} name="apellido" type="text" label="Apellido" placeholder="Apellido" InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
                                             <AccountCircle />

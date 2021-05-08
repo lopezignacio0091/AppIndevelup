@@ -12,6 +12,7 @@ import MyTextField from './textField/MyTextField';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import * as Yup from "yup";
 import { makeStyles } from '@material-ui/core/styles';
+import { setEditUser } from '../../../../actions/UsuarioActions';
 
 const useStyles = makeStyles((theme) => ({
     grid: {
@@ -27,7 +28,7 @@ const FormularioTask = () => {
     const classes = useStyles();
 
     const dispatch = useDispatch();
-    const { taskEdit, editStatus } = useSelector(state => state.TaskReducer);
+    const { taskEdit, editStatus ,task } = useSelector(state => state.TaskReducer);
     const { users } = useSelector(state => state.UsuarioReducer);
     const SignupSchema = Yup.object().shape({
         codigo: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').required('Required'),
@@ -35,7 +36,7 @@ const FormularioTask = () => {
         duracionPlanificada: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').matches(/^[0-9]+$/, "Invalid only numbers").required('Required'),
         //usuarioId:  Yup.required('Required'),
     });
-
+   
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Formik
@@ -43,7 +44,7 @@ const FormularioTask = () => {
                     codigo: (taskEdit.codigo !== '') ? taskEdit.codigo : '',
                     descripcion: (taskEdit.descripcion !== '') ? taskEdit.descripcion : '',
                     duracionPlanificada: (taskEdit.duracionPlanificada !== '') ? taskEdit.duracionPlanificada : '',
-                    usuarioId: (!taskEdit.usuarioId) ? '' : taskEdit.usuarioId,
+                    usuarioId: (!taskEdit.usuario) ? '' : taskEdit.usuario,
                 }}
                 validationSchema={SignupSchema}
                 onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -106,10 +107,10 @@ const FormularioTask = () => {
                                             id: 'usuarioId',
                                         }}
                                         defaultValue={initialValues.usuarioId}
-                                        onChange={value => setFieldValue('usuarioId', value.target.value)}
+                                        onChange={value => setFieldValue('usuarioId',Number(value.currentTarget.id))}
                                     >
                                         {users.length > 0 && users.map((item, index) => (
-                                            <MenuItem value={Number(item.id)} key={index}>{item.name}</MenuItem>
+                                            <MenuItem id={item.id}  value={item.nombre} key={index}>{item.nombre}</MenuItem>
                                         ))
                                         }
                                     </Field>

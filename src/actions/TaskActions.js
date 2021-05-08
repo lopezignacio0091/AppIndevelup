@@ -4,17 +4,18 @@ import {
     UPDATE_TASK,
     SET_ERROR,
     STATUS_FORMULARIO,
+    SET_LOADING
 } from './types';
 
 import axios from 'axios';
 
 export const getTasks = () => async dispatch => {
     try {
-        const { data } = await axios.get('/api/tasks');
+        const { data } = await axios.get('https://localhost:44303/api/Tarea');
 
         dispatch({
             type: GET_TASKS,
-            payload: data.tasks
+            payload: data
         });
 
     } catch (error) {
@@ -46,7 +47,7 @@ export const setEditTask = (elem) => async dispatch => {
 export const deleteTask = (id) => async dispatch => {
     try {
         // eslint-disable-next-line no-unused-vars
-        const { data } = await axios.post('/api/tasks/delete/'+id);
+        const { data } = await axios.delete('https://localhost:44303/api/Tarea/'+id);
 
         dispatch({
             type: DELETE_TASK,
@@ -69,3 +70,10 @@ export const abrirFormularioTask = (status) =>  dispatch => {
         payload: status
     });
 }
+
+
+export const setLoading = () => dispatch=> {
+    dispatch({
+        type: SET_LOADING,
+    })
+};

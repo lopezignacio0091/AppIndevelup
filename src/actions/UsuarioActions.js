@@ -3,18 +3,18 @@ import {
     GET_USERS,
     SET_ERROR,
     STATUS_FORMULARIO,
-    UPDATE_USER
+    UPDATE_USER,
+    SET_LOADING
 } from './types';
 
 import axios from 'axios';
 
 export const getUsers = () => async dispatch => {
     try {
-        const { data } = await axios.get('/api/users');
-
+        const { data } = await axios.get('https://localhost:44303/api/usuario');
         dispatch({
             type: GET_USERS,
-            payload: data.users
+            payload: data
         });
 
     } catch (error) {
@@ -46,13 +46,14 @@ export const setEditUser = (elem) => async dispatch => {
 export const deleteUser = (id) => async dispatch => {
     try {
         // eslint-disable-next-line no-unused-vars
-        const { data } = await axios.post('/api/users/delete/'+id);
+        const { data } = await axios.delete('https://localhost:44303/api/Usuario/'+id);
         dispatch({
             type: DELETE_USER,
             payload: id
         });
 
     } catch (error) {
+        
         dispatch({
             type: SET_ERROR,
             payload: error
@@ -69,3 +70,9 @@ export const abrirFormulario = (status) =>  dispatch => {
     });
 
 }
+
+export const setLoading = () => dispatch=> {
+    dispatch({
+        type: SET_LOADING,
+    })
+};

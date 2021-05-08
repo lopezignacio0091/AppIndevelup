@@ -12,12 +12,7 @@ const UserTable = () => {
     const {users} = useSelector(state => state.UsuarioReducer);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getUsers());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const columns = ["Id", "Name","Apellido","Email",
+    const columns = ["Id", "Name",
     {
         name: "Delete",
         options: {
@@ -43,7 +38,7 @@ const UserTable = () => {
           empty: true,
           customBodyRender: (value, tableMeta, updateValue) => {
             return (
-                <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => dispatch(setEditUser({'id':tableMeta.rowData[0],'name':tableMeta.rowData[1], 'apellido':tableMeta.rowData[2], 'email':tableMeta.rowData[3] }))}>
+                <IconButton color="primary" aria-label="upload picture" component="span" onClick={() => dispatch(setEditUser({'id':tableMeta.rowData[0],'nombre':tableMeta.rowData[1]}))}>
                     <EditIcon />
                 </IconButton>
             );
@@ -65,9 +60,7 @@ const UserTable = () => {
                 data={users.map(e=>{
                     return [
                         e.id,
-                        e.name,
-                        e.apellido,
-                        e.email
+                        e.nombre,
                     ]
                 })}
                 columns={columns}

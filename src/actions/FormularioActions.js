@@ -5,23 +5,22 @@ import {
     SET_NEW_USER, 
     UPDATE_USER_LIST,
     SET_NEW_TASK,
-    UPDATE_TASK_LIST
+    UPDATE_TASK_LIST,
 } from './types';
 //import axios from 'axios';
 
-export const setLoading = () => {
-    return{
-        type: SET_LOADING
-    }
+export const setLoading = () => dispatch=>{
+    dispatch({
+        type: SET_LOADING,
+    })
 }
 
 export const createUser = (user) => async dispatch => {
     try {
-        const { data } = await Axios.post('/api/users', { data: { name: user.name, apellido: user.apellido, email: user.email } });
-
+        const { data } = await Axios.post('https://localhost:44303/api/Usuario', {"Nombre":user.name});
         dispatch({
             type: SET_NEW_USER,
-            payload: data.user
+            payload: data
         })
 
     } catch (error) {
@@ -35,14 +34,14 @@ export const createUser = (user) => async dispatch => {
 
 export const editUser = (newValues,id) => async dispatch => {
     try {
-        const { data } = await Axios.patch('/api/users/edit/'+id, {data: newValues});
-        console.log(data);
+        const { data } = await Axios.put('https://localhost:44303/api/Usuario/'+id,{"Nombre":newValues.name,"Id":id});
         dispatch({
             type: UPDATE_USER_LIST,
-            payload: data.user
+            payload: data
         });
 
     } catch (error) {
+        console.log(error);
         dispatch({
             type: SET_ERROR,
             payload: error
@@ -80,6 +79,7 @@ export const editTask = (newValues,id) => async dispatch => {
         });
 
     } catch (error) {
+        console.log(error);
         dispatch({
             type: SET_ERROR,
             payload: error

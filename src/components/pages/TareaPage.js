@@ -1,13 +1,27 @@
 import { Grid } from '@material-ui/core';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector,useDispatch } from 'react-redux';
+import {setLoading,getTasks} from '../../actions/TaskActions';
 import TaskFormDialog from '../layout/tareas/dialog/TaskFormDialog';
 import NewButtonTask from '../layout/tareas/nuevoTaskButton/NewButtonTask';
 import TareaTable from '../layout/tareas/TareaTable';
+import Progress from '../layout/progress/Progress'
 
 const TareaPage = () => {
+    const {abrirFormularioStatus,loading } = useSelector(state => state.TaskReducer);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(setLoading());
+        dispatch(getTasks());
+      }, []);
 
-    const {abrirFormularioStatus} = useSelector(state => state.TaskReducer);
+
+      if(loading){
+        return(
+          <Progress/>
+        )
+      }
 
     return (
         <Grid
