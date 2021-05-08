@@ -71,11 +71,11 @@ export const createTask = (task) => async dispatch => {
 
 export const editTask = (newValues,id) => async dispatch => {
     try {
-        const { data } = await Axios.patch('/api/tasks/edit/'+id, {data: newValues});
+        const { data } = await Axios.put('https://localhost:44303/api/Tarea/'+id, {"DuracionPlanificada":newValues.duracionPlanificada,"Codigo":newValues.codigo,"Descripcion":newValues.descripcion,"Usuario":{"Id":newValues.usuarioId},"Id":id});
        
         dispatch({
             type: UPDATE_TASK_LIST,
-            payload: data.task
+            payload: data
         });
 
     } catch (error) {
