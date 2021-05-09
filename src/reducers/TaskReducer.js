@@ -16,7 +16,7 @@ const initialState = {
     taskEdit:{},
     editStatus: false,
     abrirFormularioStatus: false,
-    tituloFormulario: 'Formulario Nuevo'
+    tituloFormulario: 'Formulario Nuevo',
 }
 const TaskReducer =  (state = initialState, action) => {
     switch(action.type){
@@ -69,8 +69,7 @@ const TaskReducer =  (state = initialState, action) => {
         case DELETE_TASK:
             return{
                 ...state,
-                // eslint-disable-next-line eqeqeq
-                tasks: state.tasks.filter(elem => { return (elem.id != action.payload)})
+                tasks: state.tasks.filter(elem => { return (elem.id != action.payload.id)})
         }
         default:
             return state;

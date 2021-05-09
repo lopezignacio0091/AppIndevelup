@@ -1,3 +1,4 @@
+import { ContextSelectorFooter } from '@patternfly/react-core';
 import Axios from 'axios';
 import { 
     SET_ERROR,
@@ -53,14 +54,16 @@ export const editUser = (newValues,id) => async dispatch => {
 
 export const createTask = (task) => async dispatch => {
     try {
-        const { data } = await Axios.post('/api/tasks', { data: { codigo: task.codigo, descripcion: task.descripcion, duracionPlanificada: task.duracionPlanificada, usuarioId: task.usuarioId } });
-
+          
+          const  {data}  =  (task.usuarioId!="") ? await Axios.post('https://localhost:44303/api/Tarea/',{"DuracionPlanificada":Number(task.duracionPlanificada),"Codigo":Number(task.codigo),"Descripcion":task.descripcion,"Usuario":{"Id":task.usuarioId}})
+            : await Axios.post('https://localhost:44303/api/Tarea/',{"DuracionPlanificada":Number(task.duracionPlanificada),"Codigo":Number(task.codigo),"Descripcion":task.descripcion});
         dispatch({
             type: SET_NEW_TASK,
-            payload: data.task
+            payload: data
         })
 
     } catch (error) {
+        console.log(error);
         dispatch({
             type: SET_ERROR,
             payload: error

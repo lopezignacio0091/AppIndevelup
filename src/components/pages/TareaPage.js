@@ -6,10 +6,10 @@ import {setLoading,getTasks} from '../../actions/TaskActions';
 import TaskFormDialog from '../layout/tareas/dialog/TaskFormDialog';
 import NewButtonTask from '../layout/tareas/nuevoTaskButton/NewButtonTask';
 import TareaTable from '../layout/tareas/TareaTable';
-import Progress from '../layout/progress/Progress'
+import Progress from '../layout/progress/Progress';
 
 const TareaPage = () => {
-    const {abrirFormularioStatus,loading } = useSelector(state => state.TaskReducer);
+    const {abrirFormularioStatus,loading} = useSelector(state => state.TaskReducer);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setLoading());
@@ -24,15 +24,15 @@ const TareaPage = () => {
       }
 
     return (
-        <Grid
-        container
-        direction="row"
-        >
-            <Grid container item xs={12} sm={12} md={8} lg={8}>
+        <Grid container direction="row">
+          <Grid container item xs={12} sm={12} md={12}  lg={12}> 
+              <Grid item xs={12} md={4}>
                 <NewButtonTask />
-                <TareaTable />
+              </Grid>
             </Grid>
-
+            <Grid container item xs={12} sm={12} md={12} lg={12}>      
+                <TareaTable />
+            </Grid>        
             <Grid container item xs={12} sm={12} md={4} lg={4}>
                 <TaskFormDialog open={abrirFormularioStatus} />
             </Grid>

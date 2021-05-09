@@ -12,7 +12,6 @@ import axios from 'axios';
 export const getTasks = () => async dispatch => {
     try {
         const { data } = await axios.get('https://localhost:44303/api/Tarea');
-
         dispatch({
             type: GET_TASKS,
             payload: data
@@ -26,6 +25,8 @@ export const getTasks = () => async dispatch => {
 
     }
 }
+
+
 
 export const setEditTask = (elem) => async dispatch => {
     try {
@@ -48,7 +49,7 @@ export const deleteTask = (id) => async dispatch => {
     try {
         // eslint-disable-next-line no-unused-vars
         const { data } = await axios.delete('https://localhost:44303/api/Tarea/'+id);
-
+        
         dispatch({
             type: DELETE_TASK,
             payload: id
