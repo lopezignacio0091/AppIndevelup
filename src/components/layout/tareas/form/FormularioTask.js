@@ -34,7 +34,7 @@ const FormularioTask = () => {
         codigo: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').required('Required'),
         descripcion: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').matches(/^[a-zA-Z ]+$/, "Invalid SurName only letters").required('Required'),
         duracionPlanificada: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').matches(/^[0-9]+$/, "Invalid only numbers").required('Required'),
-        //usuarioId:  Yup.required('Required'),
+        usuarioId: (editStatus) ?  Yup.string().min(1, 'Too Short!').max(70, 'Too Long!').required('Required') : ! Yup.string().min(1, 'Too Short!').max(70, 'Too Long!').required('Required'),
     });
    
     return (
