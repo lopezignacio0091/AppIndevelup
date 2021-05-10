@@ -3,13 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { editTask, createTask } from '../../../../actions/FormularioActions';
 import { abrirFormularioTask } from '../../../../actions/TaskActions';
 import { Formik, Form, Field } from 'formik';
-import { Button, LinearProgress, Grid, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { Button, LinearProgress ,Grid, FormControl, InputLabel, MenuItem, Select, colors } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ContactMailRoundedIcon from '@material-ui/icons/ContactMailRounded';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import MyTextField from './textField/MyTextField';
+import RateReviewIcon from '@material-ui/icons/RateReview';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import QueryBuilderIcon from '@material-ui/icons/QueryBuilder';
 import * as Yup from "yup";
 import { makeStyles } from '@material-ui/core/styles';
 import { setEditUser } from '../../../../actions/UsuarioActions';
@@ -34,15 +37,15 @@ const FormularioTask = () => {
         codigo: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').required('Required'),
         descripcion: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').matches(/^[a-zA-Z ]+$/, "Invalid SurName only letters").required('Required'),
         duracionPlanificada: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').matches(/^[0-9]+$/, "Invalid only numbers").required('Required'),
-        //usuarioId: (editStatus) ?  Yup.string().min(1, 'Too Short!').max(70, 'Too Long!').required('Required') : ! Yup.string().min(1, 'Too Short!').max(70, 'Too Long!').required('Required'),
+        usuarioId: (editStatus) ?  Yup.number().required().positive().integer() : ! Yup.number().required().positive().integer(),
     });
 
-    const SignupSchemaEdit = Yup.object().shape({
-        codigo: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').required('Required'),
-        descripcion: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').matches(/^[a-zA-Z ]+$/, "Invalid SurName only letters").required('Required'),
-        duracionPlanificada: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').matches(/^[0-9]+$/, "Invalid only numbers").required('Required'),
-        usuarioId:  Yup.number().required().positive().integer(),
-    });
+    // const SignupSchemaEdit = Yup.object().shape({
+    //     codigo: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').required('Required'),
+    //     descripcion: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').matches(/^[a-zA-Z ]+$/, "Invalid SurName only letters").required('Required'),
+    //     duracionPlanificada: Yup.string().min(2, 'Too Short!').max(70, 'Too Long!').matches(/^[0-9]+$/, "Invalid only numbers").required('Required'),
+    //     usuarioId:  Yup.number().required().positive().integer(),
+    // });
    
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -53,8 +56,8 @@ const FormularioTask = () => {
                     duracionPlanificada: (taskEdit.duracionPlanificada !== '') ? taskEdit.duracionPlanificada : '',
                     usuarioId: (!taskEdit.usuario) ? '' : taskEdit.usuario,
                 }}
-                validationSchema={(editStatus) ? SignupSchemaEdit : SignupSchema}
-                onSubmit={(values, { setSubmitting, resetForm }) => {
+                validationSchema={SignupSchema}
+                onSubmit={(values, { setSubmitting, resetForm}) => {
                     setTimeout(() => {
                         if (editStatus) {
                             dispatch(editTask(values, taskEdit.id));
@@ -67,7 +70,7 @@ const FormularioTask = () => {
                     }, 500);
                 }}
             >
-                {({ submitForm, isSubmitting, setFieldValue, initialValues }) => (
+                {({ submitForm, isSubmitting, setFieldValue, initialValues,errors }) => (
                     <Form>
                         <Grid container>
 
@@ -76,7 +79,7 @@ const FormularioTask = () => {
                                 <MyTextField className={classes.grid} name="codigo" type="text" label="Codigo" placeholder="Codigo" InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <AccountCircle />
+                                            <ReceiptIcon />
                                         </InputAdornment>
                                     ),
                                 }} />
@@ -86,7 +89,7 @@ const FormularioTask = () => {
                                 <MyTextField className={classes.grid} name="descripcion" type="text" label="Descripcion" placeholder="Descripcion" InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <AccountCircle />
+                                            <RateReviewIcon />
                                         </InputAdornment>
                                     ),
                                 }} />
@@ -97,7 +100,7 @@ const FormularioTask = () => {
                                 <MyTextField className={classes.grid} name="duracionPlanificada" type="text" label="Duracion Planificada" placeholder="Duracion Planificada" InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
-                                            <ContactMailRoundedIcon />
+                                            <QueryBuilderIcon />
                                         </InputAdornment>
                                     ),
                                 }} />
@@ -116,12 +119,17 @@ const FormularioTask = () => {
                                         defaultValue={initialValues.usuarioId}
                                         onChange={value => setFieldValue('usuarioId',Number(value.currentTarget.id))}
                                     >
+                                       
                                         {users.length > 0 && users.map((item, index) => (
                                             <MenuItem id={item.id}  value={item.nombre} key={index}>{item.nombre}</MenuItem>
                                         ))
                                         }
                                     </Field>
                                 </FormControl>
+                                {errors.usuarioId &&
+                                    <div className="input-feedback" style={{ color:colors.red[500]}}>
+                                    {errors.usuarioId}
+                                    </div>}
 
                             </Grid>
 

@@ -17,6 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import AssignmentRoundedIcon from '@material-ui/icons/AssignmentRounded';
+import ReceiptIcon from '@material-ui/icons/Receipt';
 import Home from './Home';
 import { BrowserRouter as Router, Switch, Route, Link  } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
@@ -156,7 +157,7 @@ export default function MiniDrawer() {
         <List>
           {[{text : 'Usuarios', ruta: '/User'}, {text : 'Tareas', ruta: '/Tarea'},{text :'About' , ruta:'/About'}].map((elem, index) => (
             <ListItem button key={elem.text} component={Link} to={elem.ruta} >
-              <ListItemIcon>{index % 2 === 0 ? <AccountCircleRoundedIcon /> : <AssignmentRoundedIcon />}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <AccountCircleRoundedIcon /> : <AssignmentRoundedIcon/>}</ListItemIcon>
               <ListItemText primary={elem.text} />
             </ListItem>
           ))}

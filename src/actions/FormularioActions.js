@@ -55,7 +55,7 @@ export const editUser = (newValues,id) => async dispatch => {
 export const createTask = (task) => async dispatch => {
     try {
           
-          const  {data}  =  (task.usuarioId!="") ? await Axios.post('https://localhost:44303/api/Tarea/',{"DuracionPlanificada":Number(task.duracionPlanificada),"Codigo":Number(task.codigo),"Descripcion":task.descripcion,"Usuario":{"Id":task.usuarioId}})
+          const  {data}  =  (task.usuarioId!="") ? await Axios.post('https://localhost:44303/api/Tarea/',{"DuracionPlanificada":Number(task.duracionPlanificada),"Codigo":Number(task.codigo),"Descripcion":task.descripcion,"UsuarioId":task.usuarioId})
             : await Axios.post('https://localhost:44303/api/Tarea/',{"DuracionPlanificada":Number(task.duracionPlanificada),"Codigo":Number(task.codigo),"Descripcion":task.descripcion});
         dispatch({
             type: SET_NEW_TASK,
@@ -74,7 +74,7 @@ export const createTask = (task) => async dispatch => {
 
 export const editTask = (newValues,id) => async dispatch => {
     try {
-        const { data } =  await Axios.put('https://localhost:44303/api/Tarea/'+id, {"DuracionPlanificada":newValues.duracionPlanificada,"Codigo":newValues.codigo,"Descripcion":newValues.descripcion,"Usuario":{"Id":newValues.usuarioId},"Id":id});
+        const { data } =  await Axios.put('https://localhost:44303/api/Tarea/'+id, {"DuracionPlanificada":newValues.duracionPlanificada,"Codigo":newValues.codigo,"Descripcion":newValues.descripcion,"UsuarioId":(newValues.usuarioId == 0) ? null : newValues.usuarioId,"Id":id});
         dispatch({
             type: UPDATE_TASK_LIST,
             payload: data
